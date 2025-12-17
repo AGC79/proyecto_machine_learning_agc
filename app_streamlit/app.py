@@ -2,6 +2,7 @@ from PIL import Image
 import streamlit as st
 import base64
 from io import BytesIO
+import random
 
 # ---------------------- CONFIG ----------------------
 st.set_page_config(
@@ -21,7 +22,7 @@ st.markdown("""
 
 /* ===== TÍTULO ===== */
 h1 {
-    margin: 20px 0 15px 0; /* margen superior aumentado */
+    margin: 20px 0 15px 0;
     font-size: 42px;
     font-weight: 700;
     color: #3a1f1a;
@@ -33,7 +34,7 @@ h1 {
 .gif-container {
     width: 160px;
     height: 160px;
-    margin: 0 auto 20px auto; /* margen inferior aumentado */
+    margin: 0 auto 20px auto;
     border-radius: 50%;
     overflow: hidden;
     border: 3px solid rgba(255,255,255,0.7);
@@ -48,7 +49,7 @@ h1 {
     font-weight: 600;
     color: #3a1f1a;
     border-radius: 6px;
-    margin-bottom: 16px; /* margen inferior aumentado */
+    margin-bottom: 16px;
 }
 
 /* ===== BOTÓN ===== */
@@ -127,7 +128,7 @@ if uploaded_file:
     image.save(buffered, format="PNG")
     img_str = base64.b64encode(buffered.getvalue()).decode()
     
-    # Mostrar la imagen centrada, más pequeña y con margen inferior
+    # Mostrar la imagen centrada y más pequeña
     st.markdown(
         f"<div style='text-align:center; margin-bottom:20px;'>"
         f"<img src='data:image/png;base64,{img_str}' width='300' style='border-radius:12px;'/>"
@@ -146,7 +147,10 @@ modelo = st.selectbox(
 )
 
 # ---------------------- PREDICCIÓN ----------------------
-predict = st.button("🚀 Predecir emoción")
+# Botón centrado usando columnas
+col1, col2, col3, col4 = st.columns([1,1,2,1])
+with col3:
+    predict = st.button("Predecir emoción")
 
 emociones = ["angry", "happy", "relaxed", "sad"]
 prediccion = None
