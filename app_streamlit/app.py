@@ -161,15 +161,16 @@ emociones = ["angry", "happy", "relaxed", "sad"]
 prediccion = None
 
 if predict and uploaded_file:
-    prediccion = random.choice(emociones)
-    st.title("prediciendo...")
-    #if prediccion == 
-    # llamas a tus modelos pasandole img_3d, img_flat
-        #st.title(img_flat.shape)
-    pred = f.rf_model(img_flat)
-    st.title(pred)
-
-
+    if modelo == "RandomForest":
+        prediccion = f.rf_model(img_flat)
+    elif modelo == "KNN":
+        prediccion = f.knn_model(img_flat)
+    elif modelo == "Red Neuronal":
+        prediccion = f.rn_model(img_3d)
+    elif modelo == "Red Convolucional + Red Neuronal":
+        prediccion = f.conv_rn_model(img_3d)
+    elif modelo == "Red Convolucional + Red Neuronal + Data Augmentation":
+        prediccion = f.conv_rn_da_model(img_3d)
 
 elif predict:
     st.error("❌ Debes cargar una imagen primero")
