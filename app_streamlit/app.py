@@ -3,6 +3,7 @@ import streamlit as st
 import base64
 from io import BytesIO
 import random
+import funciones as f
 
 # ---------------------- CONFIG ----------------------
 st.set_page_config(
@@ -119,7 +120,6 @@ st.markdown(
 
 # ---------------------- IMAGE UPLOAD ----------------------
 uploaded_file = st.file_uploader("Selecciona una imagen", type=["jpg","jpeg","png"])
-
 if uploaded_file:
     image = Image.open(uploaded_file)
     
@@ -135,6 +135,11 @@ if uploaded_file:
         f"</div>",
         unsafe_allow_html=True
     )
+    img_3d, img_flat = f.procesar_imagen(uploaded_file)
+
+# ---------------------- IMAGE PROCESSING ----------------------
+
+# check
 
 # ---------------------- MODEL SELECTION ----------------------
 st.markdown("<div class='text-bar'>🧠 Selección de modelo</div>", unsafe_allow_html=True)
@@ -145,7 +150,7 @@ modelo = st.selectbox(
      "Red Convolucional + Red Neuronal + Data Augmentation"],
     label_visibility="collapsed"
 )
-
+st.title(modelo)
 # ---------------------- PREDICCIÓN ----------------------
 # Botón centrado usando columnas
 col1, col2, col3, col4 = st.columns([1,1,2,1])
@@ -157,6 +162,15 @@ prediccion = None
 
 if predict and uploaded_file:
     prediccion = random.choice(emociones)
+    st.title("prediciendo...")
+    #if prediccion == 
+    # llamas a tus modelos pasandole img_3d, img_flat
+        #st.title(img_flat.shape)
+    pred = f.rf_model(img_flat)
+    st.title(pred)
+
+
+
 elif predict:
     st.error("❌ Debes cargar una imagen primero")
 

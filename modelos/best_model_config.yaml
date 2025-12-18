@@ -1,0 +1,45 @@
+project_name: "dog_emotion_recognition"
+version: "1.0.0"
+
+# 1. Rutas
+paths:
+  X_train_data: "../data/exports/X_train.npy"
+  X_val_data: "../data/exports/X_val.npy"
+  y_train_data: "../data/exports/y_train.npy"
+  y_val_data: "../data/exports/y_val.npy"
+  model_output: "best_model.keras"
+
+# 2. Especificaciones de Imagen
+image_params:
+  target_size: [64, 64]
+  color_mode: "rgb"
+  channels: 3
+
+# 3. Data Augmentation
+data_augmentation:
+  rescale: 1.0  # Según tu código 1./1
+  rotation_range: 10
+  width_shift_range: 0.1
+  height_shift_range: 0.1
+  zoom_range: 0.1
+  horizontal_flip: true
+  fill_mode: "nearest"
+
+# 4. Arquitectura de la Red (Estructura de capas)
+model_architecture:
+  conv_blocks:
+    - {filters: 32, kernel: [3, 3], pool: [2, 2]}
+    - {filters: 64, kernel: [3, 3], pool: [2, 2]}
+    - {filters: 128, kernel: [3, 3], pool: [2, 2]}
+  dense_layers:
+    - {units: 64, activation: "relu"}
+    - {units: 32, activation: "relu"}
+    - {units: 4, activation: "softmax"}
+
+# 5. Parámetros de Compilación y Entrenamiento
+training:
+  batch_size: 16
+  epochs: 50
+  optimizer: "adam"
+  loss: "categorical_crossentropy"
+  metrics: ["categorical_accuracy"]
