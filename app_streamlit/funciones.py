@@ -21,33 +21,33 @@ def rf_model(imagen_perro):
     modelo_rf_path = os.path.join(MODELOS_DIR, "modelo_randomforest.pkl")
     modelo_rf = pickle.load(open(modelo_rf_path, "rb"))
     imagen_perro = imagen_perro.reshape(1, -1)
-    pred_rf = modelo_rf.predict(imagen_perro)
-    return pred_rf
+    probs = modelo_rf.predict_proba(imagen_perro)[0]
+    return emociones[np.argmax(probs)], probs
 
 def knn_model(imagen_perro):
     modelo_knn_path = os.path.join(MODELOS_DIR, "modelo_knn.pkl")
     modelo_knn = pickle.load(open(modelo_knn_path, "rb"))
     imagen_perro = imagen_perro.reshape(1, -1)
-    pred_knn = modelo_knn.predict(imagen_perro)
-    return pred_knn
+    probs = modelo_knn.predict_proba(imagen_perro)[0]
+    return emociones[np.argmax(probs)], probs
 
 def rn_model(imagen_perro):
     modelo_rn_path = os.path.join(MODELOS_DIR, "modelo_rn.keras")
     modelo_rn = keras.models.load_model(modelo_rn_path)
     input_data = np.expand_dims(imagen_perro, axis=0).astype("float32") / 255.0
-    pred_rn = modelo_rn.predict(input_data)
-    return emociones[np.argmax(pred_rn)]
+    probs = modelo_rn.predict(input_data)[0]
+    return emociones[np.argmax(probs)], probs
 
 def conv_rn_model(imagen_perro):
     modelo_conv_rn_path = os.path.join(MODELOS_DIR, "modelo_conv_rn.keras")
     modelo_conv_rn = keras.models.load_model(modelo_conv_rn_path)
     input_data = np.expand_dims(imagen_perro, axis=0).astype("float32") / 255.0
-    pred_conv_rn = modelo_conv_rn.predict(input_data)
-    return emociones[np.argmax(pred_conv_rn)]
+    probs = modelo_conv_rn.predict(input_data)[0]
+    return emociones[np.argmax(probs)], probs
 
 def conv_rn_da_model(imagen_perro):
     best_model_path = os.path.join(MODELOS_DIR, "best_model.keras")
     best_model = keras.models.load_model(best_model_path)
     input_data = np.expand_dims(imagen_perro, axis=0).astype("float32") / 255.0
-    pred_conv_rn_da = best_model.predict(input_data)
-    return emociones[np.argmax(pred_conv_rn_da)]
+    probs = best_model.predict(input_data)[0]
+    return emociones[np.argmax(probs)], probs

@@ -1,0 +1,36 @@
+image = imread("data/imagen.png")
+image.shape
+
+image = image[:, :, :3] 
+
+shape_original = image.shape
+
+shape_original
+
+plt.imshow(image)
+plt.axis('off') 
+plt.show()
+
+image_proc = image.reshape(-1,3)
+
+X = image_proc
+print(X.shape)
+
+kmeans = KMeans(n_clusters=3, n_init=10, random_state=11).fit(X)
+
+kmeans.labels_.shape
+
+kmeans.labels_
+
+kmeans.cluster_centers_[kmeans.labels_]
+
+
+centroids = kmeans.cluster_centers_
+
+labels = kmeans.labels_
+
+img_segmented = centroids[labels].reshape(image_proc.shape).astype(np.uint8)
+
+plt.imshow(img_segmented)
+plt.axis('off')  # opcional, para quitar ejes
+plt.show()
