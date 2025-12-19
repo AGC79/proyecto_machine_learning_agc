@@ -103,4 +103,4 @@ for i, (col, emo) in enumerate(zip(cols, emociones)):
         col.progress(p_val)
         col.markdown(f"<p class='certeza-label'>{certeza_txt}</p>", unsafe_allow_html=True)
 
-st.markdown(f"<div class='footer'>🔬 Tecnología de Predicción 2025 – Análisis de Compatibilidad de Patrones finalizado con éxito.</div>", unsafe_allow_html=True)
+st.markdown(f"<div class='footer'>🔬 Tecnología de Predicción 2025 – By Álvaro Guerra Cabello.</div>", unsafe_allow_html=True)
